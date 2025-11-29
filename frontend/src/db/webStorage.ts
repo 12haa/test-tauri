@@ -1,4 +1,4 @@
-import type { User } from './client';
+import type { User } from './schema';
 
 // Web browser storage using localStorage
 const USERS_KEY = 'app_users';
@@ -26,7 +26,7 @@ class WebStorage {
     return users;
   }
 
-  async insert(tableName: string, values: Omit<User, 'id' | 'created_at'>): Promise<User[]> {
+  async insert(tableName: string, values: Omit<User, 'id' | 'createdAt'>): Promise<User[]> {
     if (tableName !== 'users') return [];
 
     const users = this.getUsers();
@@ -36,7 +36,7 @@ class WebStorage {
       id: newId,
       username: values.username,
       password: values.password,
-      created_at: Math.floor(Date.now() / 1000), // Unix timestamp in seconds
+      createdAt: Math.floor(Date.now() / 1000), // Unix timestamp in seconds
     };
 
     users.push(newUser);

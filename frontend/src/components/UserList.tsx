@@ -5,7 +5,7 @@ interface User {
   id: number;
   username: string;
   password: string;
-  createdAt?: Date | null;
+  createdAt?: string | number | null;
   created_at?: number;
 }
 
