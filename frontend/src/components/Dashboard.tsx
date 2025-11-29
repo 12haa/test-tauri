@@ -10,26 +10,34 @@ interface User {
 const Dashboard: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Check if user is logged in
-    const userData = localStorage.getItem('user');
-    if (!userData) {
-      navigate('/login');
-      return;
-    }
+    const checkAuth = async () => {
+      // Check if user is logged in
+      const userData = localStorage.getItem('user');
+      if (!userData) {
+        navigate('/login');
+        setIsLoading(false);
+        return;
+      }
 
-    try {
-      const parsedUser = JSON.parse(userData) as User;
-      setUser(parsedUser);
-    } catch (error) {
-      console.error('Failed to parse user data:', error);
-      localStorage.removeItem('user');
-      navigate('/login');
-    }
+      try {
+        const parsedUser = JSON.parse(userData) as User;
+        setUser(parsedUser);
+      } catch (error) {
+        console.error('Failed to parse user data:', error);
+        localStorage.removeItem('user');
+        navigate('/login');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    checkAuth();
   }, [navigate]);
 
-  if (!user) {
+  if (isLoading || !user) {
     return (
       <>
         <Navigation isAuthenticated={true} />
