@@ -4,12 +4,12 @@
   "productName": "frontend",
   "version": "0.1.0",
 
-  "identifier": "com.tauri.frontend",
+  "identifier": "com.tauri.frontend.app",
 
   "build": {
     "frontendDist": "../dist",
     "devUrl": "http://localhost:5174",
-    "beforeDevCommand": "npm run dev",
+    "beforeDevCommand": "npm run dev", 
     "beforeBuildCommand": "npm run build"
   },
 
