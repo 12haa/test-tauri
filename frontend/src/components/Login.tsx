@@ -14,17 +14,23 @@ const Login: React.FC = () => {
     setLoading(true);
     setError('');
 
+    console.log('🔐 Login attempt:', { username, password: '***' });
+
     try {
       const response = await loginUser({ username, password });
+      console.log('📥 Login response:', response);
 
       if (response.ok && response.data) {
+        console.log('✅ Login successful:', response.data);
         // Store user data in localStorage (or you could use a proper auth context)
         localStorage.setItem('user', JSON.stringify(response.data));
         navigate('/dashboard');
       } else {
-        // setError(response.error || 'Login failed');
+        console.error('❌ Login failed:', response.error);
+        setError(response.error || 'Login failed');
       }
     } catch (err) {
+      console.error('💥 Login exception:', err);
       setError('An unexpected error occurred');
       console.error(err);
     } finally {
